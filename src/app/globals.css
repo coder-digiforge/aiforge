@@ -769,12 +769,19 @@ button {
 }
 
 .sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-right: 1px solid #222738;
   padding: 25px 17px 15px;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   background: #0d1019;
+  z-index: 40;
 }
 
 .sidebar .brand {
@@ -968,6 +975,7 @@ button {
 
 .dash-main {
   min-width: 0;
+  min-height: 100vh;
 }
 
 .dash-topbar {
@@ -2594,11 +2602,13 @@ button:disabled {
     top: 0;
     left: 0;
     bottom: 0;
+    align-self: auto;
     width: min(280px, 86vw);
+    height: 100vh;
+    max-height: 100vh;
     z-index: 70;
     transform: translateX(-105%);
     transition: transform .28s ease;
-    min-height: 100vh;
     box-shadow: 20px 0 60px rgba(0,0,0,.45);
   }
 
