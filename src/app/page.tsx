@@ -13,6 +13,13 @@ import {
 import Link from "next/link";
 import { generators } from "@/config/generators";
 import HeroBanner from "@/components/landing/hero-banner";
+import StudioPrompt from "@/components/landing/studio-prompt";
+
+const navLinkClass =
+  "group relative inline-flex items-center rounded-lg px-2.5 py-2 text-sm font-medium text-slate-400 transition-all duration-300 hover:bg-violet-500/[0.10] hover:text-white";
+
+const navUnderlineClass =
+  "pointer-events-none absolute bottom-0.5 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400 to-blue-400 shadow-[0_0_10px_rgba(167,139,250,0.9)] transition-all duration-300 group-hover:w-[65%]";
 
 // Bust any stale CDN error responses for /
 export const dynamic = "force-dynamic";
@@ -117,13 +124,9 @@ export default function Home() {
                 { name: "How it works", href: "#how-it-works" },
                 { name: "Pricing", href: "#pricing" },
               ].map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="group relative rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-all duration-300 hover:bg-violet-500/[0.10] hover:text-white lg:px-4"
-                >
+                <a key={item.name} href={item.href} className={`${navLinkClass} text-slate-300 lg:px-4`}>
                   {item.name}
-                  <span className="absolute bottom-0.5 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400 to-blue-400 shadow-[0_0_10px_rgba(167,139,250,0.9)] transition-all duration-300 group-hover:w-[65%]" />
+                  <span className={navUnderlineClass} />
                 </a>
               ))}
             </div>
@@ -131,9 +134,10 @@ export default function Home() {
             <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
               <Link
                 href="/login"
-                className="inline-flex h-9 items-center whitespace-nowrap rounded-lg px-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-violet-500/[0.12] hover:text-white sm:h-11 sm:px-3"
+                className={`${navLinkClass} h-9 whitespace-nowrap text-slate-200 sm:h-11 sm:px-3`}
               >
                 Sign in
+                <span className={navUnderlineClass} />
               </Link>
 
               <Link
@@ -144,7 +148,7 @@ export default function Home() {
                 <span className="relative z-10 hidden sm:inline">Open workspace</span>
                 <ArrowRight
                   size={16}
-                  className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                  className="relative z-10 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5"
                 />
                 <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0 group-active:translate-x-0" />
               </Link>
@@ -193,17 +197,20 @@ export default function Home() {
                   <span className="relative z-10">Start Free — 120 credits</span>
                   <ArrowRight
                     size={17}
-                    className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                    className="relative z-10 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5"
                   />
                   <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
                 </Link>
 
                 <a
                   href="#tools"
-                  className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl border border-white/15 bg-white/[0.04] px-6 text-sm font-medium text-slate-200 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40 hover:bg-white/[0.08] hover:text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.25)] sm:px-7"
+                  className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl border border-white/15 bg-white/[0.04] px-6 text-sm font-medium text-slate-200 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40 hover:bg-violet-500/[0.10] hover:text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.25)] sm:px-7"
                 >
                   <span className="relative z-10">Explore tools</span>
-                  <ArrowDown size={15} className="relative z-10 shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-y-0.5" />
+                  <ArrowDown
+                    size={15}
+                    className="relative z-10 shrink-0 text-slate-400 transition-transform duration-300 ease-out group-hover:translate-y-1 group-hover:text-violet-300"
+                  />
                   <span className="absolute inset-0 -translate-x-full bg-white/10 transition-transform duration-500 group-hover:translate-x-0" />
                 </a>
               </div>
@@ -261,7 +268,7 @@ export default function Home() {
                   <Link
                     key={tool.name}
                     href="/register"
-                    className="flex items-center gap-2.5 rounded-lg px-3 py-3 text-xs text-slate-400 transition-all duration-300 hover:bg-violet-500/[0.08] hover:text-violet-200 hover:shadow-[0_0_18px_rgba(139,92,246,0.10)] active:bg-violet-500/[0.12] active:text-violet-100"
+                    className="group/tool flex items-center gap-2.5 rounded-lg px-3 py-3 text-xs text-slate-400 transition-all duration-300 hover:bg-violet-500/[0.10] hover:text-white hover:shadow-[0_0_18px_rgba(139,92,246,0.14)] active:bg-violet-500/[0.12]"
                   >
                     <tool.icon size={16} className={`shrink-0 ${tool.color}`} />
                     <span className="leading-snug">{tool.name}</span>
@@ -270,7 +277,7 @@ export default function Home() {
               </div>
             </aside>
 
-            <div className="flex min-h-[200px] flex-col justify-between rounded-xl border border-white/[0.07] bg-gradient-to-br from-[#171526] to-[#0d101a] p-5 text-center sm:min-h-[230px] sm:p-6 md:p-8 md:text-left">
+            <div className="flex min-h-[200px] flex-col justify-between rounded-xl border border-white/[0.07] bg-gradient-to-br from-[#171526] to-[#0d101a] p-5 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.18)] sm:min-h-[230px] sm:p-6 md:p-8 md:text-left">
               <div className="flex flex-col items-center md:items-start">
                 <div className="mb-3 flex items-center gap-2 text-xs font-medium text-violet-300">
                   <Sparkles size={14} />
@@ -284,19 +291,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 px-3 py-3 sm:mt-8 sm:px-4">
-                <span className="min-w-0 truncate text-left text-xs text-slate-500">
-                  Describe what you want to create...
-                </span>
-                <Link
-                  href="/register"
-                  aria-label="Start creating"
-                  className="group relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_18px_rgba(139,92,246,0.3)] transition-all active:scale-95 hover:scale-105"
-                >
-                  <ArrowRight size={17} className="relative z-10" />
-                  <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
-                </Link>
-              </div>
+              <StudioPrompt />
             </div>
           </div>
         </div>
@@ -322,11 +317,11 @@ export default function Home() {
             <Link
               key={id}
               href="/register"
-              className="group flex h-full flex-col rounded-2xl border border-white/10 bg-[#10111c]/80 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]"
+              className="group flex h-full flex-col rounded-2xl border border-white/10 bg-[#10111c]/80 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[0.06] hover:shadow-[0_0_36px_rgba(139,92,246,0.22)]"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <span
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${landingIconClass(color)}`}
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105 ${landingIconClass(color)}`}
                 >
                   <Icon size={22} />
                 </span>
@@ -343,7 +338,7 @@ export default function Home() {
                 </span>
                 <ArrowRight
                   size={14}
-                  className="shrink-0 transition-transform group-hover:translate-x-1"
+                  className="shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5"
                 />
               </span>
             </Link>
@@ -364,7 +359,7 @@ export default function Home() {
               className="group relative mt-6 inline-flex h-11 w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-5 text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)] sm:w-auto"
             >
               <span className="relative z-10">Get started</span>
-              <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5" />
               <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
             </Link>
           </div>
@@ -420,10 +415,10 @@ export default function Home() {
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col items-center rounded-2xl border p-7 text-center transition-all duration-300 ${
+              className={`group/card relative flex flex-col items-center rounded-2xl border p-7 text-center transition-all duration-300 hover:-translate-y-1 ${
                 tier.highlight
-                  ? "border-violet-400/50 bg-gradient-to-b from-violet-500/[0.14] to-[#10111c] shadow-[0_0_40px_rgba(139,92,246,0.2)]"
-                  : "border-white/10 bg-[#10111c]"
+                  ? "border-violet-400/50 bg-gradient-to-b from-violet-500/[0.14] to-[#10111c] shadow-[0_0_40px_rgba(139,92,246,0.2)] hover:border-violet-300/70 hover:shadow-[0_0_50px_rgba(139,92,246,0.35)]"
+                  : "border-white/10 bg-[#10111c] hover:border-violet-400/45 hover:bg-violet-500/[0.06] hover:shadow-[0_0_36px_rgba(139,92,246,0.22)]"
               }`}
             >
               {tier.highlight && (
@@ -431,7 +426,7 @@ export default function Home() {
                   MOST POPULAR
                 </span>
               )}
-              <h3 className="text-lg font-semibold">{tier.name}</h3>
+              <h3 className="text-lg font-semibold transition-colors duration-300 group-hover/card:text-white">{tier.name}</h3>
               <div className="mt-4 flex items-baseline justify-center gap-1">
                 <span className="text-4xl font-bold tracking-tight">{tier.price}</span>
                 <span className="text-sm text-slate-400">{tier.period}</span>
@@ -446,15 +441,18 @@ export default function Home() {
               </ul>
               <Link
                 href={tier.href}
-                className={`group relative mt-8 inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
+                className={`group/btn relative mt-8 inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
                   tier.highlight
-                    ? "bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)]"
-                    : "border border-white/15 bg-white/[0.04] hover:-translate-y-0.5 hover:border-violet-400/50 hover:bg-violet-500/10 hover:shadow-[0_0_24px_rgba(139,92,246,0.25)]"
+                    ? "bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.65)]"
+                    : "border border-white/15 bg-white/[0.04] hover:border-violet-400/50 hover:bg-violet-500/10"
                 }`}
               >
                 <span className="relative z-10">{tier.cta}</span>
-                <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
-                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0 group-active:translate-x-0" />
+                <ArrowRight
+                  size={16}
+                  className="relative z-10 shrink-0 transition-transform duration-300 ease-out group-hover/btn:translate-x-1.5 group-hover/card:translate-x-1.5"
+                />
+                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover/btn:translate-x-0 group-hover/card:translate-x-0" />
               </Link>
             </div>
           ))}
@@ -482,7 +480,7 @@ export default function Home() {
           <span className="relative z-10">Create free account</span>
           <ArrowRight
             size={18}
-            className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+            className="relative z-10 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-1.5"
           />
           <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
         </Link>
@@ -499,25 +497,27 @@ export default function Home() {
               AI<span className="text-violet-400">Forge</span>
             </span>
           </div>
-          <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm text-slate-400">
-            <a href="#tools" className="transition-colors hover:text-white">
-              Tools
-            </a>
-            <a href="#how-it-works" className="transition-colors hover:text-white">
-              How it works
-            </a>
-            <a href="#pricing" className="transition-colors hover:text-white">
-              Pricing
-            </a>
-            <Link href="/privacy" className="transition-colors hover:text-white">
-              Privacy
-            </Link>
-            <Link href="/terms" className="transition-colors hover:text-white">
-              Terms
-            </Link>
-            <Link href="/login" className="transition-colors hover:text-white">
-              Sign in
-            </Link>
+          <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm">
+            {[
+              { name: "Tools", href: "#tools" },
+              { name: "How it works", href: "#how-it-works" },
+              { name: "Pricing", href: "#pricing" },
+            ].map((item) => (
+              <a key={item.name} href={item.href} className={navLinkClass}>
+                {item.name}
+                <span className={navUnderlineClass} />
+              </a>
+            ))}
+            {[
+              { name: "Privacy", href: "/privacy" },
+              { name: "Terms", href: "/terms" },
+              { name: "Sign in", href: "/login" },
+            ].map((item) => (
+              <Link key={item.name} href={item.href} className={navLinkClass}>
+                {item.name}
+                <span className={navUnderlineClass} />
+              </Link>
+            ))}
           </nav>
           <p className="shrink-0 text-xs text-slate-500">© 2026 AIForge. All rights reserved.</p>
         </div>

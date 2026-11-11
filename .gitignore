@@ -12,3 +12,6 @@ dist
 .env.*.local
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+.vercel
+.env*

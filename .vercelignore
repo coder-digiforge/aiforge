@@ -1,0 +1,7 @@
+dist
+.data
+.next
+node_modules
+*.log
+.tsbuildinfo
+tsconfig.tsbuildinfo
