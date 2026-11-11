@@ -1,0 +1,48 @@
+AIForge — Regular Marketplace License
+=====================================
+
+Copyright (c) 2026 AIForge authors.
+
+By purchasing AIForge from an authorized marketplace (including Codester),
+you receive a license to use this source code under the terms below.
+
+YOU MAY
+-------
+1. Use the software for one (1) end product / deployed application that you
+   own or operate (your SaaS, agency client deliverable, or internal tool).
+2. Modify the source code to fit your product.
+3. Hire contractors to customize the software for your licensed end product.
+
+YOU MAY NOT
+-----------
+1. Resell, redistribute, sublicense, share, or publish the source code
+   (modified or unmodified) as a competing template, starter kit, or
+   marketplace item.
+2. Place the source on a public repository without making it private, unless
+   you have purchased an extended/redistribution license from the author.
+3. Use the AIForge name, logo, or branding as your own product brand without
+   replacing them.
+4. Claim authorship of the original source code.
+
+THIRD-PARTY SERVICES
+--------------------
+OpenAI, Stripe, Resend, Neon/Postgres, Vercel, and other integrations require
+their own accounts and are subject to their terms and pricing. API keys are
+never included in this package.
+
+DEMO INSTANCE
+-------------
+Any public demo URL is for evaluation only and is not part of the licensed
+end product. Demo data may be reset at any time.
+
+NO WARRANTY
+-----------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. THE AUTHORS ARE NOT LIABLE FOR DAMAGES ARISING FROM USE OF THE
+SOFTWARE.
+
+SUPPORT
+-------
+Marketplace support covers installation guidance and defect clarification as
+described in your purchase page. Custom feature development is not included
+unless separately agreed.
