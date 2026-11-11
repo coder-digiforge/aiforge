@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SESSION_COOKIE = "aiforge_session";
 
 const PROTECTED_PREFIXES = ["/dashboard"];
-const AUTH_PAGES = ["/login", "/register"];
+const AUTH_PAGES = ["/login", "/register", "/forgot-password"];
 
 function hasSessionCookie(request: NextRequest): boolean {
   return Boolean(request.cookies.get(SESSION_COOKIE)?.value);
@@ -23,7 +23,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (AUTH_PAGES.includes(pathname) && signedIn) {
+  // Signed-in users stay in the app — never land on marketing/auth pages
+  if (signedIn && (pathname === "/" || AUTH_PAGES.includes(pathname))) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -31,5 +32,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register"],
+  matcher: ["/", "/dashboard/:path*", "/login", "/register", "/forgot-password"],
 };

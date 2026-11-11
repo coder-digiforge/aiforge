@@ -1,12 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState, type FormEvent } from "react";
 import { ArrowRight, Loader2, Sparkles } from "lucide-react";
 
-export default function LoginPage() {
+function safeNext(path: string | null): string {
+  if (!path) return "/dashboard";
+  if (!path.startsWith("/") || path.startsWith("//")) return "/dashboard";
+  if (path === "/" || path.startsWith("/login") || path.startsWith("/register")) return "/dashboard";
+  return path;
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +35,7 @@ export default function LoginPage() {
         setError(data.error ?? "Login failed.");
         return;
       }
-      router.push("/dashboard");
+      router.replace(safeNext(searchParams.get("next")));
       router.refresh();
     } catch {
       setError("Network error. Try again.");
@@ -95,5 +103,23 @@ export default function LoginPage() {
         <p className="auth-note">Demo mode works out of the box — 120 free credits on signup.</p>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="auth-page">
+          <div className="auth-card">
+            <div className="text-center py-6">
+              <Loader2 size={40} className="spin mx-auto text-violet-400" />
+            </div>
+          </div>
+        </main>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

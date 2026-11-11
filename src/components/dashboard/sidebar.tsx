@@ -64,7 +64,7 @@ export default function Sidebar({ user, open, onClose }: Props) {
       />
       <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
         <div className="sidebar-mobile-head">
-          <Link href="/" className="brand">
+          <Link href="/dashboard" className="brand" onClick={onClose}>
             <span className="brand-mark">
               <Sparkles size={17} />
             </span>
@@ -75,7 +75,7 @@ export default function Sidebar({ user, open, onClose }: Props) {
           </button>
         </div>
 
-        <Link href="/" className="brand sidebar-brand">
+        <Link href="/dashboard" className="brand sidebar-brand">
           <span className="brand-mark">
             <Sparkles size={17} />
           </span>
