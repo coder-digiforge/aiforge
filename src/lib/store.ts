@@ -1,10 +1,7 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { neonConfig, Pool, type PoolClient } from "@neondatabase/serverless";
-import ws from "ws";
+import { neon } from "@neondatabase/serverless";
 import type { Database, User, PublicUser } from "./types";
-
-neonConfig.webSocketConstructor = ws;
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
@@ -14,25 +11,26 @@ const EMPTY_DB: Database = { users: [], sessions: [], history: [] };
 
 let fileCache: Database | null = null;
 let fileWriteQueue: Promise<void> = Promise.resolve();
-let pool: Pool | null = null;
 let schemaReady: Promise<void> | null = null;
 
 function databaseUrl(): string | undefined {
-  const url = process.env.DATABASE_URL?.trim();
-  return url || undefined;
+  const raw = process.env.DATABASE_URL?.trim();
+  if (!raw) return undefined;
+  // channel_binding breaks some serverless drivers
+  return raw
+    .replace(/&channel_binding=require/gi, "")
+    .replace(/\?channel_binding=require&/gi, "?")
+    .replace(/\?channel_binding=require$/gi, "");
 }
 
 function hasPostgres(): boolean {
   return Boolean(databaseUrl());
 }
 
-function getPool(): Pool {
+function getSql() {
   const url = databaseUrl();
   if (!url) throw new Error("DATABASE_URL is not configured.");
-  if (!pool) {
-    pool = new Pool({ connectionString: url, max: 1 });
-  }
-  return pool;
+  return neon(url);
 }
 
 function migrateUser(user: Partial<User> & { id: string; email: string; name: string }): User {
@@ -69,25 +67,25 @@ function normalizeDb(raw: Partial<Database> | null | undefined): Database {
 async function ensurePostgresSchema(): Promise<void> {
   if (!schemaReady) {
     schemaReady = (async () => {
-      const client = await getPool().connect();
-      try {
-        await client.query(`
-          CREATE TABLE IF NOT EXISTS aiforge_store (
-            id integer PRIMARY KEY CHECK (id = 1),
-            data jsonb NOT NULL,
-            updated_at timestamptz NOT NULL DEFAULT now()
-          )
-        `);
-        const existing = await client.query(`SELECT 1 FROM aiforge_store WHERE id = 1`);
-        if (existing.rowCount === 0) {
-          await client.query(`INSERT INTO aiforge_store (id, data) VALUES (1, $1::jsonb)`, [
-            JSON.stringify(EMPTY_DB),
-          ]);
-        }
-      } finally {
-        client.release();
+      const sql = getSql();
+      await sql`
+        CREATE TABLE IF NOT EXISTS aiforge_store (
+          id integer PRIMARY KEY CHECK (id = 1),
+          data jsonb NOT NULL,
+          updated_at timestamptz NOT NULL DEFAULT now()
+        )
+      `;
+      const rows = await sql`SELECT 1 AS ok FROM aiforge_store WHERE id = 1`;
+      if (rows.length === 0) {
+        await sql`
+          INSERT INTO aiforge_store (id, data)
+          VALUES (1, ${JSON.stringify(EMPTY_DB)}::jsonb)
+        `;
       }
-    })();
+    })().catch((err) => {
+      schemaReady = null;
+      throw err;
+    });
   }
   await schemaReady;
 }
@@ -123,35 +121,23 @@ async function writeDbFile(db: Database): Promise<void> {
   await fileWriteQueue;
 }
 
-async function withPgClient<T>(fn: (client: PoolClient) => Promise<T>): Promise<T> {
-  await ensurePostgresSchema();
-  const client = await getPool().connect();
-  try {
-    return await fn(client);
-  } finally {
-    client.release();
-  }
-}
-
 async function readDbPostgres(): Promise<Database> {
-  return withPgClient(async (client) => {
-    const result = await client.query<{ data: Partial<Database> }>(
-      `SELECT data FROM aiforge_store WHERE id = 1`,
-    );
-    return normalizeDb(result.rows[0]?.data);
-  });
+  await ensurePostgresSchema();
+  const sql = getSql();
+  const rows = await sql`SELECT data FROM aiforge_store WHERE id = 1`;
+  const data = rows[0]?.data as Partial<Database> | undefined;
+  return normalizeDb(data);
 }
 
 async function writeDbPostgres(db: Database): Promise<void> {
-  await withPgClient(async (client) => {
-    await client.query(
-      `INSERT INTO aiforge_store (id, data, updated_at)
-       VALUES (1, $1::jsonb, now())
-       ON CONFLICT (id) DO UPDATE
-       SET data = EXCLUDED.data, updated_at = now()`,
-      [JSON.stringify(db)],
-    );
-  });
+  await ensurePostgresSchema();
+  const sql = getSql();
+  await sql`
+    INSERT INTO aiforge_store (id, data, updated_at)
+    VALUES (1, ${JSON.stringify(db)}::jsonb, now())
+    ON CONFLICT (id) DO UPDATE
+    SET data = EXCLUDED.data, updated_at = now()
+  `;
 }
 
 /** True when using Postgres via DATABASE_URL (required for Vercel / multi-instance). */
@@ -179,25 +165,11 @@ export async function mutateDb<T>(fn: (db: Database) => T | Promise<T>): Promise
     return result;
   }
 
-  return withPgClient(async (client) => {
-    await client.query("BEGIN");
-    try {
-      const result = await client.query<{ data: Partial<Database> }>(
-        `SELECT data FROM aiforge_store WHERE id = 1 FOR UPDATE`,
-      );
-      const db = normalizeDb(result.rows[0]?.data);
-      const value = await fn(db);
-      await client.query(
-        `UPDATE aiforge_store SET data = $1::jsonb, updated_at = now() WHERE id = 1`,
-        [JSON.stringify(db)],
-      );
-      await client.query("COMMIT");
-      return value;
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    }
-  });
+  // HTTP driver (reliable on Vercel): read → mutate → write
+  const db = await readDbPostgres();
+  const result = await fn(db);
+  await writeDbPostgres(db);
+  return result;
 }
 
 export function toPublicUser(user: Database["users"][number]): PublicUser {
