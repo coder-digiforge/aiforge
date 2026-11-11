@@ -14,6 +14,10 @@ import Link from "next/link";
 import { generators } from "@/config/generators";
 import HeroBanner from "@/components/landing/hero-banner";
 
+// Bust any stale CDN error responses for /
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const steps = [
   {
     n: "01",
