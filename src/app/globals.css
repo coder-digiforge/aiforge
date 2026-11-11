@@ -75,7 +75,7 @@ button {
 
 .brand>span:last-child {
   color: #a995ff;
-  margin-left: -8px;
+  margin-left: -2px;
 }
 
 .brand-mark {
@@ -137,12 +137,19 @@ button {
   color: white;
   font-weight: 700;
   font-size: 13px;
+  line-height: 1;
   box-shadow: 0 7px 24px #755cff35;
   transition:
     transform .3s ease,
     box-shadow .3s ease,
     border-color .3s ease,
     filter .3s ease;
+}
+
+.button svg,
+.btn-neon svg {
+  flex-shrink: 0;
+  display: block;
 }
 
 .button::before,
@@ -1268,8 +1275,9 @@ button {
 }
 
 .prompt-bottom button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: #8068e8;
   border: 1px solid transparent;
@@ -1277,6 +1285,8 @@ button {
   padding: 8px 12px;
   font-size: 10px;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
   transition: .3s;
 }
 
@@ -1578,7 +1588,7 @@ a:focus-visible {
 
 .auth-brand > span:last-child {
   color: #a995ff;
-  margin-left: -8px;
+  margin-left: -2px;
 }
 
 .auth-heading h1 {
@@ -1588,7 +1598,7 @@ a:focus-visible {
 }
 
 .auth-heading p {
-  color: #8d97ac;
+  color: #9aa3b8;
   font-size: 13px;
   line-height: 1.6;
   margin: 0 0 22px;
@@ -1631,9 +1641,12 @@ a:focus-visible {
   border: 1px solid #2c3349;
   background: #0d111b;
   border-radius: 9px;
-  padding: 13px 14px;
+  height: 46px;
+  padding: 0 14px;
   color: #f1f2fa;
-  font: 13px var(--font-body);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
   outline: 0;
   transition: .25s;
 }

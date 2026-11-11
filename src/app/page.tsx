@@ -126,7 +126,7 @@ export default function Home() {
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="/login"
-                className="group relative rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition-all duration-300 hover:bg-violet-500/[0.12] hover:text-white"
+                className="group relative inline-flex h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-200 transition-all duration-300 hover:bg-violet-500/[0.12] hover:text-white"
               >
                 <span className="relative">
                   Sign in
@@ -151,15 +151,15 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative isolate flex min-h-[85vh] items-center overflow-hidden pt-24 pb-20 lg:pt-28 lg:pb-24">
+      <section className="relative isolate flex min-h-[70vh] items-center overflow-hidden pt-24 pb-16 lg:min-h-[85vh] lg:pt-28 lg:pb-24">
         {/* Background dark gradients */}
         <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-[#080910]/90 via-[#080910]/60 to-transparent" />
 
         <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 lg:px-12">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
             
-            {/* Left Content Column */}
-            <div className="flex flex-col items-start lg:col-span-6">
+            {/* Left Content Column — centered on mobile/tablet */}
+            <div className="flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
               {/* Badge */}
               <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-violet-400/25 bg-[#11101e]/65 px-4 py-2 text-[10px] font-bold leading-none tracking-[0.14em] text-violet-300 shadow-[0_0_35px_rgba(139,92,246,0.12)] backdrop-blur-md sm:text-xs">
                 <span className="h-2 w-2 shrink-0 rounded-full bg-violet-400 shadow-[0_0_10px_#a78bfa]" />
@@ -181,10 +181,10 @@ export default function Home() {
               </p>
 
               {/* Actions */}
-              <div className="mt-9 flex flex-wrap items-center gap-3">
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                 <Link
                   href="/register"
-                  className="group relative inline-flex h-12 items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 px-6 text-sm font-semibold text-white shadow-[0_0_35px_rgba(124,58,237,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_50px_rgba(124,58,237,0.65)] sm:px-7"
+                  className="group relative inline-flex h-12 items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-6 text-sm font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)] sm:px-7"
                 >
                   <Sparkles size={18} className="relative z-10 shrink-0 text-violet-200" />
                   <span className="relative z-10">Start Free — 120 credits</span>
@@ -192,19 +192,21 @@ export default function Home() {
                     size={17}
                     className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
                   />
+                  <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
                 </Link>
 
                 <a
                   href="#tools"
-                  className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-6 text-sm font-medium text-slate-200 backdrop-blur-xl transition-all duration-300 hover:border-violet-400/40 hover:bg-white/[0.08] hover:text-white sm:px-7"
+                  className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl border border-white/15 bg-white/[0.04] px-6 text-sm font-medium text-slate-200 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-violet-400/40 hover:bg-white/[0.08] hover:text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.25)] sm:px-7"
                 >
-                  Explore tools
-                  <ArrowDown size={15} className="shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-y-0.5" />
+                  <span className="relative z-10">Explore tools</span>
+                  <ArrowDown size={15} className="relative z-10 shrink-0 text-slate-400 transition-transform duration-300 group-hover:translate-y-0.5" />
+                  <span className="absolute inset-0 -translate-x-full bg-white/10 transition-transform duration-500 group-hover:translate-x-0" />
                 </a>
               </div>
 
               {/* Trust indicators */}
-              <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium text-slate-300">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-slate-300 lg:justify-start">
                 <div className="inline-flex items-center gap-2">
                   <span className="relative inline-flex h-2.5 w-2.5 shrink-0 items-center justify-center">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -219,8 +221,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Side - Beautiful AI Interface Preview */}
-            <div className="relative lg:col-span-6 flex items-center justify-center">
+            {/* Banner image — desktop only */}
+            <div className="relative hidden items-center justify-center lg:col-span-6 lg:flex">
               {/* Decorative background glows */}
               <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-r from-violet-600/40 to-cyan-500/40 blur-[80px]" />
 
@@ -232,7 +234,7 @@ export default function Home() {
                   alt="AIForge AI workspace interface preview"
                   fill
                   priority
-                  quality={100}
+                  quality={90}
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className="object-cover object-center transition-transform duration-1000 hover:scale-105"
                 />
@@ -349,7 +351,7 @@ export default function Home() {
 
       {/* Tools Section */}
       <section id="tools" className="relative z-10 mx-auto max-w-[1120px] scroll-mt-24 px-6 py-20">
-        <div className="mb-12 max-w-[640px]">
+        <div className="mx-auto mb-12 max-w-[640px] text-center">
           <span className="text-xs font-bold tracking-[0.2em] text-violet-400">AI TOOLS</span>
           <h2 className="mt-3 text-[clamp(32px,4vw,48px)] font-bold leading-tight tracking-tight">
             Seven generators.{" "}
@@ -362,7 +364,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {generators.map(({ id, name, description, icon: Icon, color, category, cost }) => (
             <Link
               key={id}
@@ -406,9 +408,11 @@ export default function Home() {
             </div>
             <Link
               href="/register"
-              className="mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-5 text-sm font-semibold transition-transform hover:-translate-y-0.5 sm:w-auto"
+              className="group relative mt-6 inline-flex h-11 w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-5 text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)] sm:w-auto"
             >
-              Get started <ArrowRight size={16} className="shrink-0" />
+              <span className="relative z-10">Get started</span>
+              <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
             </Link>
           </div>
         </div>
@@ -489,14 +493,15 @@ export default function Home() {
               </ul>
               <Link
                 href={tier.href}
-                className={`mt-8 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold transition-all duration-300 ${
+                className={`group relative mt-8 inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-semibold transition-all duration-300 ${
                   tier.highlight
-                    ? "bg-gradient-to-r from-violet-500 to-indigo-500 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
-                    : "border border-white/15 bg-white/[0.04] hover:border-violet-400/50 hover:bg-violet-500/10"
+                    ? "bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)]"
+                    : "border border-white/15 bg-white/[0.04] hover:-translate-y-0.5 hover:border-violet-400/50 hover:bg-violet-500/10 hover:shadow-[0_0_24px_rgba(139,92,246,0.25)]"
                 }`}
               >
-                {tier.cta}
-                <ArrowRight size={16} className="shrink-0" />
+                <span className="relative z-10">{tier.cta}</span>
+                <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
               </Link>
             </div>
           ))}
@@ -519,13 +524,14 @@ export default function Home() {
         </p>
         <Link
           href="/register"
-          className="group relative mt-8 inline-flex h-12 items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-8 text-sm font-semibold shadow-[0_10px_40px_rgba(124,58,237,0.4)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_50px_rgba(124,58,237,0.7)]"
+          className="group relative mt-8 inline-flex h-12 items-center justify-center gap-2.5 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-8 text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)]"
         >
           <span className="relative z-10">Create free account</span>
           <ArrowRight
             size={18}
             className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
           />
+          <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
         </Link>
       </section>
 
