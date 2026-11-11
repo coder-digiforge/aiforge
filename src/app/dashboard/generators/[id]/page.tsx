@@ -25,7 +25,7 @@ export default async function GeneratorDetailPage({
         <ArrowLeft size={15} /> All generators
       </Link>
 
-      <GeneratorWorkspace generator={generator} initialCredits={user.credits} />
+      <GeneratorWorkspace generatorId={generator.id} initialCredits={user.credits} />
 
       <footer className="dash-footer">
         <span>© 2026 AIForge</span>

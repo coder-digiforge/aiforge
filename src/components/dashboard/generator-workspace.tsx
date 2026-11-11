@@ -3,15 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Check, Copy, Loader2, Sparkles, Zap } from "lucide-react";
-import type { Generator } from "@/config/generators";
+import { getGenerator } from "@/config/generators";
 
 type Props = {
-  generator: Generator;
+  generatorId: string;
   initialCredits: number;
 };
 
-export default function GeneratorWorkspace({ generator, initialCredits }: Props) {
+export default function GeneratorWorkspace({ generatorId, initialCredits }: Props) {
   const router = useRouter();
+  const generator = getGenerator(generatorId);
   const [prompt, setPrompt] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
@@ -19,6 +20,12 @@ export default function GeneratorWorkspace({ generator, initialCredits }: Props)
   const [copied, setCopied] = useState(false);
   const [credits, setCredits] = useState(initialCredits);
   const [demo, setDemo] = useState(true);
+
+  if (!generator) {
+    return <div className="workspace-error">Unknown generator.</div>;
+  }
+
+  const Icon = generator.icon;
   const isImage = generator.id === "image";
 
   async function generate() {
@@ -33,7 +40,7 @@ export default function GeneratorWorkspace({ generator, initialCredits }: Props)
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ generatorId: generator.id, prompt }),
+        body: JSON.stringify({ generatorId, prompt }),
       });
       const data = (await res.json()) as {
         output?: string;
@@ -70,7 +77,7 @@ export default function GeneratorWorkspace({ generator, initialCredits }: Props)
     <div className="workspace">
       <div className="workspace-meta">
         <div className={`generator-icon ${generator.color}`}>
-          <generator.icon size={20} />
+          <Icon size={20} />
         </div>
         <div>
           <span className="section-kicker">{generator.category.toUpperCase()}</span>

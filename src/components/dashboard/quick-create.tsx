@@ -3,14 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Loader2, Sparkles, Zap } from "lucide-react";
-import type { Generator } from "@/config/generators";
+import { generators } from "@/config/generators";
 
 type Props = {
-  generators: Generator[];
   credits: number;
 };
 
-export default function QuickCreate({ generators, credits }: Props) {
+export default function QuickCreate({ credits }: Props) {
   const router = useRouter();
   const [generatorId, setGeneratorId] = useState(generators[0]?.id ?? "writer");
   const [prompt, setPrompt] = useState("");
@@ -50,17 +49,20 @@ export default function QuickCreate({ generators, credits }: Props) {
   return (
     <div className="prompt-wrap">
       <div className="quick-tools">
-        {generators.map((g) => (
-          <button
-            key={g.id}
-            type="button"
-            className={g.id === generatorId ? "quick-tool active" : "quick-tool"}
-            onClick={() => setGeneratorId(g.id)}
-          >
-            <g.icon size={14} />
-            {g.name}
-          </button>
-        ))}
+        {generators.map((g) => {
+          const Icon = g.icon;
+          return (
+            <button
+              key={g.id}
+              type="button"
+              className={g.id === generatorId ? "quick-tool active" : "quick-tool"}
+              onClick={() => setGeneratorId(g.id)}
+            >
+              <Icon size={14} />
+              {g.name}
+            </button>
+          );
+        })}
       </div>
 
       <textarea
@@ -78,9 +80,9 @@ export default function QuickCreate({ generators, credits }: Props) {
           <Sparkles size={13} /> Costs {selected?.cost ?? 1} credit
           {(selected?.cost ?? 1) > 1 ? "s" : ""} · {credits} available
         </span>
-        <button onClick={generate} disabled={loading}>
+        <button className="button" type="button" onClick={generate} disabled={loading}>
           {loading ? <Loader2 size={15} className="spin" /> : <Zap size={15} />}
-          {loading ? "Generating..." : "Generate"}
+          {loading ? "Generating…" : "Generate"}
           {!loading && <ArrowRight size={15} />}
         </button>
       </div>

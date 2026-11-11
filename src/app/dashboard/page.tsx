@@ -120,7 +120,7 @@ export default async function DashboardPage() {
             <Sparkles size={13} /> AI powered
           </span>
         </div>
-        <QuickCreate generators={generators} credits={user.credits} />
+        <QuickCreate credits={user.credits} />
       </section>
 
       <section className="generator-section">
