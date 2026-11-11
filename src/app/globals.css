@@ -2436,6 +2436,30 @@ button:disabled {
   margin-top: 14px;
 }
 
+.plans-heading {
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plans-heading > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plans-status {
+  text-align: center;
+  color: #8d97ac;
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+
+.plans-status.success {
+  color: #72cba8;
+}
+
 .plans-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2447,9 +2471,11 @@ button:disabled {
   border: 1px solid #2a3148;
   background: #0f1320;
   border-radius: 11px;
-  padding: 16px;
+  padding: 18px 16px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .plan-option.current {
@@ -2459,9 +2485,10 @@ button:disabled {
 
 .plan-option-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .plan-option-top b {
@@ -2493,11 +2520,14 @@ button:disabled {
   display: grid;
   gap: 8px;
   flex: 1;
+  width: 100%;
+  justify-items: center;
 }
 
 .plan-option li {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   color: #9aa3b8;
   font-size: 11px;
@@ -2505,6 +2535,7 @@ button:disabled {
 
 .plan-option li svg {
   color: #72cba8;
+  flex-shrink: 0;
 }
 
 .plan-option .button,
@@ -2517,20 +2548,6 @@ button:disabled {
 
 .plan-option .button:disabled {
   opacity: .55;
-}
-
-.plans-note {
-  margin: 14px 0 0;
-  color: #6d7890;
-  font-size: 11px;
-}
-
-.plans-note a {
-  color: #a99aff;
-}
-
-.plans-note a:hover {
-  color: white;
 }
 
 /* =================================

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   Check,
@@ -13,7 +12,7 @@ import {
 import { getSessionUser } from "@/lib/auth";
 import { isLiveAiEnabled } from "@/lib/ai";
 import { getPlans } from "@/lib/stripe";
-import { isPostgresStore, readDb } from "@/lib/store";
+import { readDb } from "@/lib/store";
 import UpgradeButton from "@/components/dashboard/upgrade-button";
 
 export const dynamic = "force-dynamic";
@@ -31,7 +30,6 @@ export default async function SettingsPage({
   const historyCount = db.history.filter((h) => h.userId === user.id).length;
   const live = isLiveAiEnabled();
   const plans = await getPlans();
-  const postgres = isPostgresStore();
 
   return (
     <>
@@ -91,43 +89,40 @@ export default async function SettingsPage({
           </div>
           <p className="settings-copy">
             {live
-              ? "OPENAI_API_KEY is configured. New generations use the live provider."
-              : "Running in demo mode. Add OPENAI_API_KEY to .env.local and restart to enable live AI output."}
+              ? "Live AI is active. New generations use the connected provider."
+              : "Demo mode is active. Generations return sample output until a live provider is connected."}
           </p>
           <ul className="settings-checklist">
             <li>
-              <Check size={14} /> Server-side API calls only
+              <Check size={14} /> Secure server-side generation
             </li>
             <li>
-              <Check size={14} /> Credits deducted per generation
+              <Check size={14} /> Credits deducted per run
             </li>
             <li>
-              <Check size={14} />{" "}
-              {postgres
-                ? "History stored in Postgres (DATABASE_URL)"
-                : "History stored in local .data/db.json"}
+              <Check size={14} /> History saved to your workspace
             </li>
           </ul>
         </section>
       </div>
 
       <section className="settings-plans">
-        <div className="section-title-row">
+        <div className="section-title-row plans-heading">
           <div>
             <span className="section-kicker">BILLING</span>
             <h2>Plans</h2>
           </div>
           <span className="ai-chip">
-            <CreditCard size={13} /> Stripe Checkout
+            <CreditCard size={13} /> Secure checkout
           </span>
         </div>
 
         {success && (
-          <p className="text-green-400 text-sm mb-3">
-            Payment successful. Your plan will update as soon as the webhook confirms it.
+          <p className="plans-status success">
+            Payment successful. Your plan will update shortly.
           </p>
         )}
-        {canceled && <p className="text-slate-400 text-sm mb-3">Checkout canceled — no charge was made.</p>}
+        {canceled && <p className="plans-status">Checkout canceled — no charge was made.</p>}
 
         <div className="plans-grid">
           {plans.map((plan) => {
@@ -156,27 +151,20 @@ export default async function SettingsPage({
                     Current plan
                   </button>
                 ) : plan.id === "free" ? (
-                  <button className="button" disabled title="Free plan is the default">
+                  <button className="button" disabled>
                     Included
                   </button>
                 ) : plan.stripePriceId ? (
                   <UpgradeButton planId={plan.id} label={`Upgrade to ${plan.name}`} />
                 ) : (
-                  <button className="button" disabled title="Configure a Stripe Price ID to enable checkout">
-                    Checkout not configured
+                  <button className="button" disabled>
+                    Coming soon
                   </button>
                 )}
               </div>
             );
           })}
         </div>
-
-        <p className="plans-note">
-          Payments are processed by Stripe. Set <code>STRIPE_SECRET_KEY</code>,{" "}
-          <code>STRIPE_WEBHOOK_SECRET</code>, <code>STRIPE_PRICE_PRO</code> and{" "}
-          <code>STRIPE_PRICE_BUSINESS</code> in .env.local to enable live checkout — see{" "}
-          <Link href="/#pricing">pricing on the landing page</Link>.
-        </p>
       </section>
 
       <footer className="dash-footer">
