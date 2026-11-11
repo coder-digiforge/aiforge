@@ -13,6 +13,8 @@
   --text: #f4f5fb;
   --purple: #8b70ff;
   --blue: #5c8dff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
