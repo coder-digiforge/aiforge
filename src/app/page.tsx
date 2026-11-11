@@ -10,9 +10,9 @@ import {
   Zap,
 } from "lucide-react";
 
-import Image from "next/image";
 import Link from "next/link";
 import { generators } from "@/config/generators";
+import HeroBanner from "@/components/landing/hero-banner";
 
 const steps = [
   {
@@ -94,14 +94,15 @@ export default function Home() {
       </div>
 
       {/* Fixed transparent Navigation */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-[#080910]/10 backdrop-blur-md">
-        <div className="mx-auto max-w-[1440px] px-6">
-          <nav className="flex h-[84px] items-center justify-between">
-            <Link href="/" className="group flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-blue-500 shadow-lg shadow-violet-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(139,92,246,0.8)]">
-                <Sparkles size={22} />
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-[#080910]/85 backdrop-blur-sm lg:bg-[#080910]/10 lg:backdrop-blur-md">
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-6">
+          <nav className="flex h-14 items-center justify-between gap-2 sm:h-16 lg:h-[84px]">
+            <Link href="/" className="group flex min-w-0 shrink items-center gap-2 sm:gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-blue-500 shadow-lg shadow-violet-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(139,92,246,0.8)] sm:h-10 sm:w-10 sm:rounded-xl">
+                <Sparkles size={18} className="sm:hidden" />
+                <Sparkles size={22} className="hidden sm:block" />
               </span>
-              <span className="text-[23px] font-bold tracking-tight transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(167,139,250,0.8)]">
+              <span className="truncate text-lg font-bold tracking-tight transition-all duration-300 group-hover:drop-shadow-[0_0_12px_rgba(167,139,250,0.8)] sm:text-[23px]">
                 AI<span className="text-violet-400">Forge</span>
               </span>
             </Link>
@@ -123,27 +124,25 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
               <Link
                 href="/login"
-                className="group relative inline-flex h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-200 transition-all duration-300 hover:bg-violet-500/[0.12] hover:text-white"
+                className="inline-flex h-9 items-center whitespace-nowrap rounded-lg px-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-violet-500/[0.12] hover:text-white sm:h-11 sm:px-3"
               >
-                <span className="relative">
-                  Sign in
-                  <span className="absolute -bottom-1 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-400 to-blue-400 shadow-[0_0_12px_rgba(167,139,250,0.9)] transition-all duration-300 group-hover:w-full" />
-                </span>
+                Sign in
               </Link>
 
               <Link
                 href="/dashboard"
-                className="group relative inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-4 text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)] sm:px-5"
+                className="group relative inline-flex h-9 items-center justify-center gap-1.5 overflow-hidden whitespace-nowrap rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 px-3 text-sm font-semibold shadow-[0_0_20px_rgba(139,92,246,0.2)] transition-all duration-300 active:scale-[0.98] hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)] sm:h-11 sm:gap-2 sm:px-5"
               >
-                <span className="relative z-10">Open workspace</span>
+                <span className="relative z-10 sm:hidden">Open</span>
+                <span className="relative z-10 hidden sm:inline">Open workspace</span>
                 <ArrowRight
-                  size={17}
+                  size={16}
                   className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
                 />
-                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
+                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0 group-active:translate-x-0" />
               </Link>
             </div>
           </nav>
@@ -151,19 +150,19 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative isolate flex min-h-[70vh] items-center overflow-hidden pt-24 pb-16 lg:min-h-[85vh] lg:pt-28 lg:pb-24">
+      <section className="relative isolate flex min-h-[70vh] items-center overflow-hidden pt-20 pb-14 sm:pt-24 sm:pb-16 lg:min-h-[85vh] lg:pt-28 lg:pb-24">
         {/* Background dark gradients */}
         <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-r from-[#080910]/90 via-[#080910]/60 to-transparent" />
 
-        <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 lg:px-12">
+        <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 sm:px-6 lg:px-12">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
             
             {/* Left Content Column — centered on mobile/tablet */}
             <div className="flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
               {/* Badge */}
-              <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-violet-400/25 bg-[#11101e]/65 px-4 py-2 text-[10px] font-bold leading-none tracking-[0.14em] text-violet-300 shadow-[0_0_35px_rgba(139,92,246,0.12)] backdrop-blur-md sm:text-xs">
+              <div className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-violet-400/25 bg-[#11101e]/65 px-3 py-2 text-[9px] font-bold leading-none tracking-[0.12em] text-violet-300 sm:mb-7 sm:gap-2.5 sm:px-4 sm:text-xs sm:tracking-[0.14em]">
                 <span className="h-2 w-2 shrink-0 rounded-full bg-violet-400 shadow-[0_0_10px_#a78bfa]" />
-                <span>THE AI WORKSPACE BUILT FOR YOUR NEXT BIG IDEA</span>
+                <span className="truncate">THE AI WORKSPACE BUILT FOR YOUR NEXT BIG IDEA</span>
               </div>
 
               {/* Main heading */}
@@ -221,110 +220,59 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Banner image — desktop only */}
-            <div className="relative hidden items-center justify-center lg:col-span-6 lg:flex">
-              {/* Decorative background glows */}
-              <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-r from-violet-600/40 to-cyan-500/40 blur-[80px]" />
-
-              {/* Main image container */}
-              <div className="relative overflow-hidden rounded-[30px] border border-white/15 bg-gradient-to-br from-[#10111c] to-[#0b0c14] shadow-2xl shadow-violet-950/40 backdrop-blur-xl transition-all duration-500 hover:shadow-[0_0_60px_rgba(139,92,246,0.3)] w-full aspect-[4/3]">
-                
-                <Image
-                  src="/images/ai-forge-banner.png"
-                  alt="AIForge AI workspace interface preview"
-                  fill
-                  priority
-                  quality={90}
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover object-center transition-transform duration-1000 hover:scale-105"
-                />
-                
-                {/* Gradient overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b12]/70 via-transparent to-transparent pointer-events-none" />
-                
-                {/* Glass info card overlay on image */}
-                <div className="absolute bottom-4 left-4 right-4 flex flex-col gap-3 rounded-2xl border border-white/15 bg-black/45 px-4 py-3.5 shadow-lg backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-5 sm:px-5 sm:py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-violet-500/30 bg-violet-500/20 text-violet-300">
-                      <WandSparkles size={18} />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="truncate text-sm font-semibold text-white">Hyper-Realistic AI Visuals</div>
-                      <div className="text-[10px] leading-4 text-slate-400">4K Render • Ultra Detail • Live Studio</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between gap-3 border-t border-white/10 pt-3">
-                    <span className="text-[10px] font-semibold text-violet-300">AI Engine 4.0 Active</span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-[10px] font-semibold leading-none text-emerald-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      Live
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating feature chips around the main card */}
-              <div className="absolute -top-3 right-3 hidden lg:block">
-                <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#10111c]/90 px-3.5 py-2.5 shadow-lg backdrop-blur-md transition-transform duration-300 hover:scale-105">
-                  <ImageIcon size={16} className="shrink-0 text-blue-400" />
-                  <span className="text-xs font-semibold text-slate-200">Image Generator</span>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-3 left-3 hidden lg:block">
-                <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#10111c]/90 px-3.5 py-2.5 shadow-lg backdrop-blur-md transition-transform duration-300 hover:scale-105">
-                  <Code2 size={16} className="shrink-0 text-cyan-400" />
-                  <span className="text-xs font-semibold text-slate-200">Code Assistant</span>
-                </div>
-              </div>
-            </div>
+            <HeroBanner />
 
           </div>
         </div>
       </section>
 
       {/* Workspace Preview */}
-      <section className="relative z-10 mx-auto max-w-[1120px] px-5 pb-24">
-        <div className="rounded-t-[22px] border border-white/[0.12] bg-[#10111c] p-2 shadow-[0_-20px_100px_rgba(124,58,237,0.10)]">
-          <div className="flex h-10 items-center justify-between border-b border-white/[0.07] px-3">
+      <section className="relative z-10 mx-auto max-w-[1120px] px-4 pb-16 sm:px-5 sm:pb-24">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-[#10111c] shadow-[0_-20px_100px_rgba(124,58,237,0.10)] sm:rounded-t-[22px]">
+          <div className="flex h-10 items-center justify-between border-b border-white/[0.07] px-3 sm:px-4">
             <div className="flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
               <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </div>
             <span className="text-[11px] text-slate-500">AIForge / Workspace</span>
-            <span className="flex items-center gap-2 text-[11px] text-slate-400">
+            <span className="hidden items-center gap-2 text-[11px] text-slate-400 sm:flex">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               All systems ready
             </span>
+            <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 sm:hidden">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Ready
+            </span>
           </div>
 
-          <div className="grid gap-4 p-5 md:grid-cols-[220px_1fr] md:p-8">
+          <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-[220px_1fr] md:p-8">
             <aside className="rounded-xl border border-white/[0.07] bg-[#0b0c14] p-4">
-              <div className="mb-5 flex items-center gap-2 text-sm font-semibold">
+              <div className="mb-4 flex items-center justify-center gap-2 text-sm font-semibold md:mb-5 md:justify-start">
                 <Sparkles size={16} className="text-violet-400" />
                 Your workspace
               </div>
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:space-y-0 md:gap-2">
                 {workspaceTools.map((tool) => (
-                  <div
+                  <Link
                     key={tool.name}
-                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-xs text-slate-400 transition-all duration-300 hover:bg-violet-500/[0.08] hover:text-violet-200 hover:shadow-[0_0_18px_rgba(139,92,246,0.10)]"
+                    href="/register"
+                    className="flex items-center gap-2.5 rounded-lg px-3 py-3 text-xs text-slate-400 transition-all duration-300 hover:bg-violet-500/[0.08] hover:text-violet-200 hover:shadow-[0_0_18px_rgba(139,92,246,0.10)] active:bg-violet-500/[0.12] active:text-violet-100"
                   >
-                    <tool.icon size={16} className={tool.color} />
-                    {tool.name}
-                  </div>
+                    <tool.icon size={16} className={`shrink-0 ${tool.color}`} />
+                    <span className="leading-snug">{tool.name}</span>
+                  </Link>
                 ))}
               </div>
             </aside>
 
-            <div className="flex min-h-[230px] flex-col justify-between rounded-xl border border-white/[0.07] bg-gradient-to-br from-[#171526] to-[#0d101a] p-6 md:p-8">
-              <div>
+            <div className="flex min-h-[200px] flex-col justify-between rounded-xl border border-white/[0.07] bg-gradient-to-br from-[#171526] to-[#0d101a] p-5 text-center sm:min-h-[230px] sm:p-6 md:p-8 md:text-left">
+              <div className="flex flex-col items-center md:items-start">
                 <div className="mb-3 flex items-center gap-2 text-xs font-medium text-violet-300">
                   <Sparkles size={14} />
                   AI CREATION STUDIO
                 </div>
-                <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+                <h2 className="text-xl font-semibold tracking-tight sm:text-2xl md:text-3xl">
                   What will you create today?
                 </h2>
                 <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">
@@ -332,16 +280,17 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 px-4 py-3">
-                <span className="min-w-0 truncate text-xs text-slate-500">
+              <div className="mt-6 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 px-3 py-3 sm:mt-8 sm:px-4">
+                <span className="min-w-0 truncate text-left text-xs text-slate-500">
                   Describe what you want to create...
                 </span>
                 <Link
                   href="/register"
                   aria-label="Start creating"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_18px_rgba(139,92,246,0.3)] transition-transform hover:scale-105"
+                  className="group relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_18px_rgba(139,92,246,0.3)] transition-all active:scale-95 hover:scale-105"
                 >
-                  <ArrowRight size={17} />
+                  <ArrowRight size={17} className="relative z-10" />
+                  <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
                 </Link>
               </div>
             </div>
@@ -463,11 +412,11 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid items-stretch gap-5 md:grid-cols-3">
+        <div className="mx-auto grid max-w-md items-stretch gap-5 md:max-w-none md:grid-cols-3">
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-2xl border p-7 transition-all duration-300 ${
+              className={`relative flex flex-col items-center rounded-2xl border p-7 text-center transition-all duration-300 ${
                 tier.highlight
                   ? "border-violet-400/50 bg-gradient-to-b from-violet-500/[0.14] to-[#10111c] shadow-[0_0_40px_rgba(139,92,246,0.2)]"
                   : "border-white/10 bg-[#10111c]"
@@ -479,21 +428,21 @@ export default function Home() {
                 </span>
               )}
               <h3 className="text-lg font-semibold">{tier.name}</h3>
-              <div className="mt-4 flex items-baseline gap-1">
+              <div className="mt-4 flex items-baseline justify-center gap-1">
                 <span className="text-4xl font-bold tracking-tight">{tier.price}</span>
                 <span className="text-sm text-slate-400">{tier.period}</span>
               </div>
-              <ul className="mt-6 flex-1 space-y-3">
+              <ul className="mt-6 flex w-full flex-1 flex-col items-center space-y-3">
                 {tier.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm leading-5 text-slate-300">
-                    <Check size={15} className="mt-0.5 shrink-0 text-emerald-400" />
+                  <li key={f} className="flex items-center justify-center gap-2.5 text-sm leading-5 text-slate-300">
+                    <Check size={15} className="shrink-0 text-emerald-400" />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
               <Link
                 href={tier.href}
-                className={`group relative mt-8 inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-semibold transition-all duration-300 ${
+                className={`group relative mt-8 inline-flex h-12 w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
                   tier.highlight
                     ? "bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(139,92,246,0.65)]"
                     : "border border-white/15 bg-white/[0.04] hover:-translate-y-0.5 hover:border-violet-400/50 hover:bg-violet-500/10 hover:shadow-[0_0_24px_rgba(139,92,246,0.25)]"
@@ -501,7 +450,7 @@ export default function Home() {
               >
                 <span className="relative z-10">{tier.cta}</span>
                 <ArrowRight size={16} className="relative z-10 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
-                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0" />
+                <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0 group-active:translate-x-0" />
               </Link>
             </div>
           ))}

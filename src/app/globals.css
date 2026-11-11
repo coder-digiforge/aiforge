@@ -1,5 +1,3 @@
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* =================================
@@ -15,8 +13,6 @@
   --text: #f4f5fb;
   --purple: #8b70ff;
   --blue: #5c8dff;
-  --font-body: 'DM Sans', sans-serif;
-  --font-head: 'Space Grotesk', sans-serif;
 }
 
 * {
@@ -31,8 +27,9 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-body);
+  font-family: var(--font-body), system-ui, sans-serif;
   font-size: 14px;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
