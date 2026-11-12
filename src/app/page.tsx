@@ -168,9 +168,9 @@ export default function Home() {
             {/* Left Content Column — centered on mobile/tablet */}
             <div className="flex flex-col items-center text-center lg:col-span-6 lg:items-start lg:text-left">
               {/* Badge */}
-              <div className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-violet-400/25 bg-[#11101e]/65 px-3 py-2 text-[9px] font-bold leading-none tracking-[0.12em] text-violet-300 sm:mb-7 sm:gap-2.5 sm:px-4 sm:text-xs sm:tracking-[0.14em]">
+              <div className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-violet-400/25 bg-[#11101e]/65 px-3 py-2 text-[10px] font-bold leading-none tracking-[0.08em] text-violet-300 sm:mb-7 sm:gap-2.5 sm:px-4 sm:text-xs sm:tracking-[0.14em]">
                 <span className="h-2 w-2 shrink-0 rounded-full bg-violet-400 shadow-[0_0_10px_#a78bfa]" />
-                <span className="truncate">THE AI WORKSPACE BUILT FOR YOUR NEXT BIG IDEA</span>
+                <span className="truncate">AI WORKSPACE FOR YOUR NEXT BIG IDEA</span>
               </div>
 
               {/* Main heading */}

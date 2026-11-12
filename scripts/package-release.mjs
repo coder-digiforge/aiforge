@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = path.join(root, "dist");
 const stageDir = path.join(distDir, "aiforge");
-const zipPath = path.join(distDir, "aiforge-v1.0.0.zip");
+const zipPath = path.join(distDir, "aiforge-v1.0.1.zip");
 
 const INCLUDE = [
   "src",

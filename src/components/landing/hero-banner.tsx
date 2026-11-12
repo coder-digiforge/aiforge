@@ -7,7 +7,7 @@ export default function HeroBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 768px)");
     const sync = () => setShow(mq.matches);
     sync();
     mq.addEventListener("change", sync);
@@ -17,10 +17,10 @@ export default function HeroBanner() {
   if (!show) return null;
 
   return (
-    <div className="relative flex items-center justify-center lg:col-span-6">
+    <div className="relative mx-auto flex w-full max-w-[560px] items-center justify-center md:max-w-none lg:col-span-6">
       <div className="absolute -inset-1 rounded-[32px] bg-gradient-to-r from-violet-600/40 to-cyan-500/40 blur-[80px]" />
 
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[30px] border border-white/15 bg-gradient-to-br from-[#10111c] to-[#0b0c14] shadow-2xl shadow-violet-950/40">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] border border-white/15 bg-gradient-to-br from-[#10111c] to-[#0b0c14] shadow-2xl shadow-violet-950/40 sm:rounded-[30px]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/ai-forge-banner.png"
@@ -32,7 +32,7 @@ export default function HeroBanner() {
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0b12]/70 via-transparent to-transparent" />
 
-        <div className="absolute bottom-5 left-5 right-5 flex flex-col gap-3 rounded-2xl border border-white/15 bg-black/45 px-5 py-4 backdrop-blur-md">
+        <div className="absolute bottom-4 left-4 right-4 flex flex-col gap-3 rounded-2xl border border-white/15 bg-black/45 px-4 py-3 backdrop-blur-md sm:bottom-5 sm:left-5 sm:right-5 sm:px-5 sm:py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-violet-500/30 bg-violet-500/20 text-violet-300">
               <WandSparkles size={18} />
@@ -56,14 +56,14 @@ export default function HeroBanner() {
         </div>
       </div>
 
-      <div className="absolute -top-3 right-3">
+      <div className="absolute -top-3 right-2 hidden sm:block lg:right-3">
         <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#10111c]/90 px-3.5 py-2.5 backdrop-blur-md">
           <ImageIcon size={16} className="shrink-0 text-blue-400" />
           <span className="text-xs font-semibold text-slate-200">Image Generator</span>
         </div>
       </div>
 
-      <div className="absolute -bottom-3 left-3">
+      <div className="absolute -bottom-3 left-2 hidden sm:block lg:left-3">
         <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-[#10111c]/90 px-3.5 py-2.5 backdrop-blur-md">
           <Code2 size={16} className="shrink-0 text-cyan-400" />
           <span className="text-xs font-semibold text-slate-200">Code Assistant</span>

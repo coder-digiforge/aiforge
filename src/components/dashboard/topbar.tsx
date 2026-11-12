@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Bell, ChevronDown, LogOut, Menu, Sparkles, UserRound } from "lucide-react";
+import { ChevronDown, LogOut, Menu, Sparkles, UserRound } from "lucide-react";
 import type { PublicUser } from "@/lib/types";
 
 function breadcrumb(pathname: string): string[] {
@@ -77,9 +77,6 @@ export default function Topbar({ user, onOpenMenu }: Props) {
         <span className="demo-pill">
           <i /> {user.credits} CREDITS
         </span>
-        <button className="icon-button" aria-label="Notifications" title="Notifications">
-          <Bell size={18} />
-        </button>
 
         <div className="top-account" ref={menuRef}>
           <button

@@ -23,8 +23,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Signed-in users stay in the app — never land on marketing/auth pages
-  if (signedIn && (pathname === "/" || AUTH_PAGES.includes(pathname))) {
+  // Signed-in users skip auth pages (landing stays public for demos/buyers)
+  if (signedIn && AUTH_PAGES.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

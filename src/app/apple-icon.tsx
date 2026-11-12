@@ -15,22 +15,13 @@ export default function AppleIcon() {
           justifyContent: "center",
           borderRadius: 40,
           background: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%)",
+          color: "white",
+          fontSize: 72,
+          fontWeight: 700,
+          fontFamily: "sans-serif",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-            fontSize: 108,
-            fontWeight: 700,
-            lineHeight: 1,
-            textShadow: "0 4px 12px rgba(0,0,0,0.25)",
-          }}
-        >
-          ✦
-        </div>
+        AF
       </div>
     ),
     size,

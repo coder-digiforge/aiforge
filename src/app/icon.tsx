@@ -15,22 +15,13 @@ export default function Icon() {
           justifyContent: "center",
           borderRadius: 8,
           background: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%)",
+          color: "white",
+          fontSize: 13,
+          fontWeight: 700,
+          fontFamily: "sans-serif",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-            fontSize: 20,
-            fontWeight: 700,
-            lineHeight: 1,
-            textShadow: "0 1px 2px rgba(0,0,0,0.25)",
-          }}
-        >
-          ✦
-        </div>
+        AF
       </div>
     ),
     size,

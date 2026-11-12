@@ -4,9 +4,9 @@ Prepare these before uploading to Codester:
 
 | Asset | Size | Status |
 |---|---|---|
-| Preview image | 800×400 (or 1600×800) | Starters in `public/codester/` |
-| Icon | 200×200 | `public/codester/icon-200x200.png` |
-| Screenshots zip | 3–9 JPG/PNG | Cropped UI only — capture from live demo |
+| Preview image | 800×400 (or 1600×800) | Ready — `public/codester/preview-*.png` |
+| Icon | 200×200 | Ready — `public/codester/icon-200x200.png` |
+| Screenshots zip | 3–9 JPG/PNG | **TODO before upload** — capture from live demo |
 
 ## Recommended screenshots
 
