@@ -14,7 +14,19 @@ type Plan = {
   stripePriceId?: string;
 };
 
-const EMPTY_FORM = { name: "", price: 0, credits: 0, stripePriceId: "" };
+type PlanForm = {
+  name: string;
+  priceDollars: string;
+  credits: string;
+  stripePriceId: string;
+};
+
+const EMPTY_FORM: PlanForm = {
+  name: "",
+  priceDollars: "0",
+  credits: "0",
+  stripePriceId: "",
+};
 
 export default function PlanEditor() {
   const [plans, setPlans] = useState<Plan[]>([]);
@@ -22,7 +34,7 @@ export default function PlanEditor() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState<PlanForm>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   async function load() {
@@ -30,7 +42,7 @@ export default function PlanEditor() {
     setError("");
     try {
       const res = await adminApi.getPlans();
-      setPlans(res.plans);
+      setPlans(res.plans.filter((p) => p.id !== "free"));
     } catch (err) {
       setError(errorMessage(err, "Failed to load plans."));
     } finally {
@@ -46,8 +58,8 @@ export default function PlanEditor() {
     setEditingId(plan.id);
     setForm({
       name: plan.name,
-      price: plan.price,
-      credits: plan.credits,
+      priceDollars: String(plan.price / 100),
+      credits: String(plan.credits),
       stripePriceId: plan.stripePriceId ?? "",
     });
     setNotice("");
@@ -56,15 +68,20 @@ export default function PlanEditor() {
 
   async function save() {
     if (!editingId) return;
-    if (!form.name.trim() || form.name.trim().length < 2) {
+
+    const name = form.name.trim();
+    const priceDollars = Number(form.priceDollars);
+    const credits = Number(form.credits);
+
+    if (name.length < 2) {
       setError("Plan name must be at least 2 characters.");
       return;
     }
-    if (!Number.isFinite(form.price) || form.price < 0) {
-      setError("Price must be a non-negative number.");
+    if (!Number.isFinite(priceDollars) || priceDollars < 0) {
+      setError("Enter a valid price in dollars.");
       return;
     }
-    if (!Number.isFinite(form.credits) || form.credits < 0) {
+    if (!Number.isFinite(credits) || credits < 0) {
       setError("Credits must be a non-negative number.");
       return;
     }
@@ -76,13 +93,13 @@ export default function PlanEditor() {
       const res = await adminApi.savePlans([
         {
           id: editingId,
-          name: form.name.trim(),
-          price: Math.round(form.price),
-          credits: Math.round(form.credits),
+          name,
+          price: Math.round(priceDollars * 100),
+          credits: Math.round(credits),
           stripePriceId: form.stripePriceId.trim() || undefined,
         },
       ]);
-      setPlans(res.plans as Plan[]);
+      setPlans((res.plans as Plan[]).filter((p) => p.id !== "free"));
       setEditingId(null);
       setNotice("Plan saved.");
     } catch (err) {
@@ -114,7 +131,7 @@ export default function PlanEditor() {
           <div key={p.id} className={`plan-option ${editingId === p.id ? "current" : ""}`}>
             <div className="plan-option-top">
               <b>{p.name}</b>
-              {p.id !== "free" && <span className="badge-demo">{p.id}</span>}
+              <span className="badge-demo">{p.id}</span>
             </div>
             <div className="plan-price">
               ${Math.round(p.price / 100)}
@@ -123,55 +140,71 @@ export default function PlanEditor() {
             <div className="plan-credits">{p.credits} credits</div>
 
             {editingId === p.id ? (
-              <>
+              <div className="plan-edit-form">
                 <div className="form-field">
-                  <label>Name</label>
+                  <label htmlFor={`plan-name-${p.id}`}>Plan name</label>
                   <input
+                    id={`plan-name-${p.id}`}
                     className="input"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                   />
                 </div>
+
                 <div className="form-field">
-                  <label>Price (cents / month)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    className="input"
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: parseInt(e.target.value, 10) || 0 })}
-                  />
+                  <label htmlFor={`plan-price-${p.id}`}>Price per month</label>
+                  <div className="price-input">
+                    <span>$</span>
+                    <input
+                      id={`plan-price-${p.id}`}
+                      type="number"
+                      min={0}
+                      step={1}
+                      className="input"
+                      value={form.priceDollars}
+                      onChange={(e) => setForm({ ...form, priceDollars: e.target.value })}
+                    />
+                  </div>
                 </div>
+
                 <div className="form-field">
-                  <label>Credits</label>
+                  <label htmlFor={`plan-credits-${p.id}`}>Monthly credits</label>
                   <input
+                    id={`plan-credits-${p.id}`}
                     type="number"
                     min={0}
                     className="input"
                     value={form.credits}
-                    onChange={(e) => setForm({ ...form, credits: parseInt(e.target.value, 10) || 0 })}
+                    onChange={(e) => setForm({ ...form, credits: e.target.value })}
                   />
                 </div>
-                {p.id !== "free" && (
-                  <div className="form-field">
-                    <label>Stripe Price ID</label>
-                    <input
-                      className="input"
-                      placeholder="price_..."
-                      value={form.stripePriceId}
-                      onChange={(e) => setForm({ ...form, stripePriceId: e.target.value })}
-                    />
-                  </div>
-                )}
-                <div className="filter-row">
-                  <button className="button" onClick={save} disabled={saving}>
+
+                <div className="form-field">
+                  <label htmlFor={`plan-stripe-${p.id}`}>Stripe Price ID</label>
+                  <input
+                    id={`plan-stripe-${p.id}`}
+                    className="input"
+                    placeholder="price_..."
+                    value={form.stripePriceId}
+                    onChange={(e) => setForm({ ...form, stripePriceId: e.target.value })}
+                  />
+                  <small className="field-hint">Optional. Paste from Stripe → Products → Price.</small>
+                </div>
+
+                <div className="plan-edit-actions">
+                  <button type="button" className="button" onClick={save} disabled={saving}>
                     {saving ? "Saving..." : "Save Changes"}
                   </button>
-                  <button className="button" onClick={() => setEditingId(null)} disabled={saving}>
+                  <button
+                    type="button"
+                    className="button"
+                    onClick={() => setEditingId(null)}
+                    disabled={saving}
+                  >
                     Cancel
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 <ul>
@@ -179,17 +212,14 @@ export default function PlanEditor() {
                     <li key={f}>✓ {f}</li>
                   ))}
                 </ul>
-                {p.id !== "free" && (
-                  <button className="button" onClick={() => startEdit(p)}>
-                    Edit
-                  </button>
-                )}
+                <button type="button" className="button" onClick={() => startEdit(p)}>
+                  Edit
+                </button>
               </>
             )}
           </div>
         ))}
       </div>
-
     </section>
   );
 }

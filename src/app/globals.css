@@ -2550,6 +2550,82 @@ button:disabled {
   opacity: .55;
 }
 
+.plan-edit-form {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  margin-top: 14px;
+  text-align: left;
+}
+
+.plan-edit-form .form-field {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+}
+
+.plan-edit-form .form-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9aa3b8;
+  letter-spacing: 0.2px;
+}
+
+.plan-edit-form .input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0c101a;
+  color: #e8ecf7;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  outline: none;
+}
+
+.plan-edit-form .input:focus {
+  border-color: rgba(166, 141, 255, 0.55);
+}
+
+.price-input {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0c101a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.price-input span {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #9aa3b8;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.price-input .input {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.field-hint {
+  color: #6f7890;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.plan-edit-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
 /* =================================
    ADMIN PANEL
    ================================= */
