@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { adminApi } from "@/lib/admin-api";
 import { errorMessage } from "@/lib/errors";
 import type { PublicUser } from "@/lib/types";
@@ -65,19 +65,17 @@ export default function UserList() {
     }
   }
 
-  function filtered() {
-    if (!search) return data;
-    const q = search.toLowerCase();
-    return data.filter((u) => u.email.toLowerCase().includes(q));
-  }
+  const filtered = !search
+    ? data
+    : data.filter((u) => u.email.toLowerCase().includes(search.toLowerCase()));
 
-  if (loading) return <p className="text-slate-500">Loading...</p>;
+  if (loading) return <p className="admin-muted">Loading users...</p>;
   if (error && !data.length) return <p className="text-red-400">{error}</p>;
 
   return (
-    <section className="settings-card">
+    <section className="settings-card admin-panel-card">
       <div className="section-title-row">
-        <h2>Users</h2>
+        <h2>All users</h2>
         <div className="filter-row">
           <input
             type="text"
@@ -86,7 +84,7 @@ export default function UserList() {
             onChange={(e) => setSearch(e.target.value)}
             className="filter-input"
           />
-          <button onClick={refresh} className="filter-active">
+          <button type="button" onClick={refresh} className="filter-active">
             Refresh
           </button>
         </div>
@@ -94,51 +92,56 @@ export default function UserList() {
 
       {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
 
-      {filtered().map((user) => (
-        <div key={user.id} className="admin-user">
-          <div className="admin-user-info">
-            <b>{user.name}</b>
-            <span className="text-slate-400">{user.email}</span>
-            <span className="badge-demo">{user.plan}</span>
-            <span className="text-xs text-slate-500">{user.credits} credits</span>
+      <div className="admin-user-list">
+        {filtered.map((user) => (
+          <div key={user.id} className="admin-user">
+            <div className="admin-user-info">
+              <b>{user.name}</b>
+              <span>{user.email}</span>
+              <span className="badge-demo">{user.plan}</span>
+              {user.role === "admin" && <span className="badge-live">admin</span>}
+            </div>
+
+            <div className="admin-user-actions">
+              <select
+                value={user.plan}
+                onChange={(e) => changePlan(user.id, e.target.value)}
+                className="select"
+                aria-label={`Plan for ${user.email}`}
+              >
+                <option value="free">Free</option>
+                <option value="pro">Pro</option>
+                <option value="business">Business</option>
+              </select>
+
+              <input
+                type="number"
+                defaultValue={user.credits}
+                min={0}
+                onBlur={(e) => {
+                  const next = parseInt(e.target.value, 10);
+                  if (Number.isNaN(next) || next < 0 || next === user.credits) return;
+                  updateCredits(user.id, next);
+                }}
+                className="input credit-field"
+                aria-label={`Credits for ${user.email}`}
+              />
+
+              <button
+                type="button"
+                onClick={() => toggleRole(user.id, user.role === "admin" ? "user" : "admin")}
+                className="toggle-btn"
+              >
+                {user.role === "admin" ? "Remove admin" : "Make admin"}
+              </button>
+
+              <button type="button" onClick={() => removeUser(user.id)} className="danger-btn">
+                Delete
+              </button>
+            </div>
           </div>
-
-          <div className="admin-user-actions">
-            <select
-              value={user.plan}
-              onChange={(e) => changePlan(user.id, e.target.value)}
-              className="select"
-            >
-              <option value="free">Free</option>
-              <option value="pro">Pro ($19/mo)</option>
-              <option value="business">Business ($49/mo)</option>
-            </select>
-
-            <input
-              type="number"
-              defaultValue={user.credits}
-              min={0}
-              onBlur={(e) => {
-                const next = parseInt(e.target.value, 10);
-                if (Number.isNaN(next) || next < 0 || next === user.credits) return;
-                updateCredits(user.id, next);
-              }}
-              className="input credit-field"
-            />
-
-            <button
-              onClick={() => toggleRole(user.id, user.role === "admin" ? "user" : "admin")}
-              className="toggle-btn"
-            >
-              {user.role === "admin" ? "Disable admin" : "Make admin"}
-            </button>
-
-            <button onClick={() => removeUser(user.id)} className="danger-btn">
-              Delete
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 }

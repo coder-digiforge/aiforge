@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SESSION_COOKIE = "aiforge_session";
 
-const PROTECTED_PREFIXES = ["/dashboard"];
+const PROTECTED_PREFIXES = ["/dashboard", "/admin"];
 const AUTH_PAGES = ["/login", "/register", "/forgot-password"];
 
 function hasSessionCookie(request: NextRequest): boolean {
@@ -32,5 +32,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/login", "/register", "/forgot-password"],
+  matcher: ["/", "/dashboard/:path*", "/admin/:path*", "/login", "/register", "/forgot-password"],
 };

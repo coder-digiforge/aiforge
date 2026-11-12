@@ -5,10 +5,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
 import { ArrowRight, Loader2, Sparkles } from "lucide-react";
 
-function safeNext(path: string | null): string {
-  if (!path) return "/dashboard";
-  if (!path.startsWith("/") || path.startsWith("//")) return "/dashboard";
-  if (path === "/" || path.startsWith("/login") || path.startsWith("/register")) return "/dashboard";
+function homeForRole(role?: string): string {
+  return role === "admin" ? "/admin" : "/dashboard";
+}
+
+function safeNext(path: string | null, role?: string): string {
+  const home = homeForRole(role);
+  if (!path) return home;
+  if (!path.startsWith("/") || path.startsWith("//")) return home;
+  if (path === "/" || path.startsWith("/login") || path.startsWith("/register")) return home;
+  if (role === "admin" && path.startsWith("/dashboard")) return "/admin";
+  if (role !== "admin" && path.startsWith("/admin")) return "/dashboard";
   return path;
 }
 
@@ -30,12 +37,12 @@ function LoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = (await res.json()) as { error?: string };
+      const data = (await res.json()) as { error?: string; user?: { role?: string } };
       if (!res.ok) {
         setError(data.error ?? "Login failed.");
         return;
       }
-      router.replace(safeNext(searchParams.get("next")));
+      router.replace(safeNext(searchParams.get("next"), data.user?.role));
       router.refresh();
     } catch {
       setError("Network error. Try again.");

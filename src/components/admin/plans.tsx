@@ -94,16 +94,16 @@ export default function PlanEditor() {
 
   if (loading) {
     return (
-      <section className="settings-card">
-        <p className="text-slate-500">Loading plans...</p>
+      <section className="settings-card admin-panel-card">
+        <p className="admin-muted">Loading plans...</p>
       </section>
     );
   }
 
   return (
-    <section className="settings-card">
+    <section className="settings-card admin-panel-card">
       <div className="section-title-row">
-        <h2>Plans</h2>
+        <h2>Paid plans</h2>
         {notice && <span className="badge-live">{notice}</span>}
       </div>
 
@@ -190,11 +190,6 @@ export default function PlanEditor() {
         ))}
       </div>
 
-      <div className="plans-note">
-        Set <code>STRIPE_PRICE_PRO</code> and <code>STRIPE_PRICE_BUSINESS</code> in .env.local (or edit the
-        Stripe Price ID here) to enable live Checkout. Webhook events must point to{" "}
-        <code>/api/stripe/webhook</code>.
-      </div>
     </section>
   );
 }

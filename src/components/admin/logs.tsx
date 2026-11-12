@@ -8,16 +8,16 @@ interface Props {
 
 export default function AdminLogs({ activity }: Props) {
   return (
-    <section className="settings-card">
+    <section className="settings-card admin-panel-card">
       <div className="section-title-row">
-        <h2>Recent Activity</h2>
+        <h2>Recent activity</h2>
       </div>
       {activity.length === 0 ? (
-        <p className="text-slate-500">No activity yet.</p>
+        <p className="admin-muted">No activity yet.</p>
       ) : (
         <div className="admin-logs">
           {activity.map((log, idx) => (
-            <div key={idx} className="log-item">
+            <div key={`${log.time}-${log.user}-${idx}`} className="log-item">
               <span className="log-time">{log.time}</span>
               <span className="log-action">{log.action}</span>
               <span className="log-user">{log.user}</span>

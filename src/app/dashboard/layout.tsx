@@ -7,6 +7,7 @@ export default async function DashboardLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
+  if (user.role === "admin") redirect("/admin");
 
   return <DashboardShell user={user}>{children}</DashboardShell>;
 }

@@ -23,12 +23,12 @@ export default function RegisterPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
-      const data = (await res.json()) as { error?: string };
+      const data = (await res.json()) as { error?: string; user?: { role?: string } };
       if (!res.ok) {
         setError(data.error ?? "Registration failed.");
         return;
       }
-      router.replace("/dashboard");
+      router.replace(data.user?.role === "admin" ? "/admin" : "/dashboard");
       router.refresh();
     } catch {
       setError("Network error. Try again.");
